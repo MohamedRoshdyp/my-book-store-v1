@@ -3,8 +3,7 @@ using System;
 namespace my_book_store_v1
 {
     public class WeatherForecast
-    {
-        public DateTime Date { get; set; }
+    {        public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }
 
