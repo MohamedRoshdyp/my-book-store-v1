@@ -12,6 +12,13 @@ namespace my_book_store_v1.Data
     {
         public static void Seed(IApplicationBuilder applicationBuilder)
         {
+            SeedBook(applicationBuilder);
+            SeedPbulihser(applicationBuilder);
+            SeedPAuthor(applicationBuilder);
+        }
+
+        public static void SeedBook(IApplicationBuilder applicationBuilder)
+        {
             //Scope with App Service
             using (var ServiceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
@@ -30,7 +37,8 @@ namespace my_book_store_v1.Data
                         DateRead = DateTime.Now,
                         Genre = "Comdey",
                         IsRead = true,
-                        Rate = 6
+                        Rate = 6,
+                        PublisherId =1
                     },
 
                      new Books()
@@ -41,11 +49,66 @@ namespace my_book_store_v1.Data
                          CoverUrl = "Https...",
                          DatedAdded = DateTime.Now.AddDays(-5),
                          Genre = "Comdey",
-                         IsRead = false
+                         IsRead = false,
+                         PublisherId =1
                      });
                     context.SaveChanges();
                 }
             }
         }
+
+        public static void SeedPbulihser(IApplicationBuilder applicationBuilder)
+        {
+            //Scope with App Service
+            using (var ServiceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                //get db
+                var context = ServiceScope.ServiceProvider.GetService<AppDbContext>();
+
+                if (!context.Publishers.Any())
+                {
+                    context.Publishers.AddRange(new Publisher()
+                    {
+
+                       Name = "publihser 1",
+                    },
+
+                     new Publisher()
+                     {
+
+                         Name = "publihser 2",
+                     });
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public static void SeedPAuthor(IApplicationBuilder applicationBuilder)
+        {
+            //Scope with App Service
+            using (var ServiceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                //get db
+                var context = ServiceScope.ServiceProvider.GetService<AppDbContext>();
+
+                if (!context.Authors.Any())
+                {
+                    context.Authors.AddRange(new Author()
+                    {
+
+                        FullName = "Author 1"
+                    },
+
+                     new Author()
+                     {
+
+                         FullName = "Author 2"
+                     });
+                    context.SaveChanges();
+                }
+            }
+        }
+
+
     }
 }

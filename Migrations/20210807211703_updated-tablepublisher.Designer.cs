@@ -3,58 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using my_book_store_v1.Data;
 
 namespace my_book_store_v1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210807211703_updated-tablepublisher")]
+    partial class updatedtablepublisher
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("my_book_store_v1.Data.Models.Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Authors");
-                });
-
-            modelBuilder.Entity("my_book_store_v1.Data.Models.Book_Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BooksId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("BooksId");
-
-                    b.ToTable("Book_Authors");
-                });
 
             modelBuilder.Entity("my_book_store_v1.Data.Models.Books", b =>
                 {
@@ -109,26 +74,7 @@ namespace my_book_store_v1.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Publishers");
-                });
-
-            modelBuilder.Entity("my_book_store_v1.Data.Models.Book_Author", b =>
-                {
-                    b.HasOne("my_book_store_v1.Data.Models.Author", "Author")
-                        .WithMany("book_Authors")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("my_book_store_v1.Data.Models.Books", "Books")
-                        .WithMany("book_Authors")
-                        .HasForeignKey("BooksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-
-                    b.Navigation("Books");
+                    b.ToTable("Publisher");
                 });
 
             modelBuilder.Entity("my_book_store_v1.Data.Models.Books", b =>
@@ -140,16 +86,6 @@ namespace my_book_store_v1.Migrations
                         .IsRequired();
 
                     b.Navigation("Publisher");
-                });
-
-            modelBuilder.Entity("my_book_store_v1.Data.Models.Author", b =>
-                {
-                    b.Navigation("book_Authors");
-                });
-
-            modelBuilder.Entity("my_book_store_v1.Data.Models.Books", b =>
-                {
-                    b.Navigation("book_Authors");
                 });
 
             modelBuilder.Entity("my_book_store_v1.Data.Models.Publisher", b =>

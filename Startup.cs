@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using my_book_store_v1.Data;
+using my_book_store_v1.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,9 @@ namespace my_book_store_v1
 
             services.AddControllers();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConnectionString));
+            services.AddTransient<BookServices>();
+            services.AddTransient<AuthorService>();
+            services.AddTransient<PublihserService>();
            
             services.AddSwaggerGen(c =>
             {
@@ -61,7 +65,7 @@ namespace my_book_store_v1
             {
                 endpoints.MapControllers();
             });
-            AppDbInitializer.Seed(app);
+            //AppDbInitializer.Seed(app);
         }
     }
 }

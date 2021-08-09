@@ -16,5 +16,12 @@ namespace my_book_store_v1.Data.Models
         public string CoverUrl { get; set; }
         public string Genre { get; set; }
         public DateTime DatedAdded { get; set; }
+
+        //Naviation property
+        public int PublisherId { get; set; }
+        public Publisher Publisher { get; set; }
+
+        //Navigation property
+        public List<Book_Author> book_Authors { get; set; }
     }
 }
