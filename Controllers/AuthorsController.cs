@@ -31,8 +31,18 @@ namespace my_book_store_v1.Controllers
         [HttpGet("get-author-with-book-by-id/{ID}")]
         public IActionResult GetAuthorwithBook(int ID)
         {
-           var result= _authorService.GetAuthorWithBookVM(ID);
-            return Ok(result);
+
+            try
+            {
+                var result = _authorService.GetAuthorWithBookVM(ID);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+           
         }
 
     }

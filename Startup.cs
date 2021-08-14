@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using my_book_store_v1.Data;
 using my_book_store_v1.Data.Services;
+using my_book_store_v1.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,8 +59,10 @@ namespace my_book_store_v1
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+    
             app.UseAuthorization();
+            //app.ConfigureExceptionHandler();
+            app.ConfigureCustomExceptionMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

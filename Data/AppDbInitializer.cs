@@ -38,7 +38,7 @@ namespace my_book_store_v1.Data
                         Genre = "Comdey",
                         IsRead = true,
                         Rate = 6,
-                        PublisherId =1
+                        PublisherId = 1
                     },
 
                      new Books()
@@ -50,7 +50,7 @@ namespace my_book_store_v1.Data
                          DatedAdded = DateTime.Now.AddDays(-5),
                          Genre = "Comdey",
                          IsRead = false,
-                         PublisherId =1
+                         PublisherId = 1
                      });
                     context.SaveChanges();
                 }

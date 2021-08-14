@@ -22,7 +22,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "api/Publishers/get-all-publihser",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
