@@ -40,5 +40,9 @@ namespace my_book_store_v1.Data.Services
 
             return _author;
         }
+
+        //get all Authors
+        public List<Author> GetAllAuthors()=> _context.Authors.ToList();
+
     }
 }

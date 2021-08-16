@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using my_book_store_v1.Data.Services;
 using my_book_store_v1.Data.ViewModels;
@@ -28,6 +29,28 @@ namespace my_book_store_v1.Controllers
             return Ok();
         }
 
+        [HttpCacheExpiration(CacheLocation =CacheLocation.Public,MaxAge =70)]
+        [HttpCacheValidation(MustRevalidate =false)]
+        //[ResponseCache(CacheProfileName = "120SecondsDuration")]
+        [HttpGet("get-all-author")]
+        public IActionResult GetAuthor()
+        {
+            var _allAuthors = _authorService.GetAllAuthors();
+            return Ok(_allAuthors);
+        }
+
+
+        //Test ETag Http
+        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 90)]
+        [HttpCacheValidation(MustRevalidate = false)]
+        [HttpGet("etag-test")]
+        public IActionResult ETag()
+        {
+            return Ok("This is Etag3");
+        }
+
+
+        //[ResponseCache(CacheProfileName = "120SecondsDuration")]
         [HttpGet("get-author-with-book-by-id/{ID}")]
         public IActionResult GetAuthorwithBook(int ID)
         {

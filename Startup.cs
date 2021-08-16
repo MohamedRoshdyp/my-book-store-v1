@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,12 +35,22 @@ namespace my_book_store_v1
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddResponseCaching();
+            services.AddMemoryCache();
+
+            services.ConfigureRateLimitingOptions();
+            services.AddHttpContextAccessor();
+
+            services.ConfigureHttpCacheHeaders();
+            services.AddControllers( config=> {
+                config.CacheProfiles.Add("120SecondsDuration", new CacheProfile { Duration = 120 });
+            });
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConnectionString));
             services.AddTransient<BookServices>();
             services.AddTransient<AuthorService>();
             services.AddTransient<PublihserService>();
-           
+            services.ConfigureVersioning();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v3", new OpenApiInfo { Title = "my_book_store_v3-Updated", Version = "v1" });
@@ -57,9 +68,10 @@ namespace my_book_store_v1
             }
 
             app.UseHttpsRedirection();
-
+            app.UseHttpCacheHeaders();
+            app.UseResponseCaching();
+            app.UseIpRateLimiting();
             app.UseRouting();
-    
             app.UseAuthorization();
             //app.ConfigureExceptionHandler();
             app.ConfigureCustomExceptionMiddleware();

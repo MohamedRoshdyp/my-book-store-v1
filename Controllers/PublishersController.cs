@@ -70,8 +70,6 @@ namespace my_book_store_v1.Controllers
             var response = _publihserService.GetPublisherById(id);
             if (response == null)
             {
-
-
                 return NotFound();
             }
 
