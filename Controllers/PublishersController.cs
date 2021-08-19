@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using my_book_store_v1.ActionResults;
 using my_book_store_v1.Data.Models;
 using my_book_store_v1.Data.Services;
@@ -18,10 +19,11 @@ namespace my_book_store_v1.Controllers
     {
         #region DI _publisherService
         private readonly PublihserService _publihserService;
-
-        public PublishersController(PublihserService publihserService)
+        private readonly ILogger<PublishersController> _logger;
+        public PublishersController(PublihserService publihserService, ILogger<PublishersController> logger)
         {
             _publihserService = publihserService;
+            _logger = logger;
         }
         #endregion
 
@@ -52,8 +54,10 @@ namespace my_book_store_v1.Controllers
         [HttpGet("get-all-publihser")]
         public IActionResult GetAllPublihser(string orderBy,string searchValue,int pageNumber,int pageSize)
         {
+            //throw new Exception("This is come from GetAllPublihser()");
             try
             {
+                _logger.LogInformation("This log is come from GetAllPublihser()");
                 var _result = _publihserService.GetAllPublihser(orderBy,searchValue,pageNumber,pageSize);
                 return Ok(_result);
             }

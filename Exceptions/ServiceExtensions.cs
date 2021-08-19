@@ -32,7 +32,6 @@ namespace my_book_store_v1.Exceptions
                 .HasDeprecatedApiVersion(1, 8);              
             });
         }
-
         public static void ConfigureHttpCacheHeaders(this IServiceCollection services)
         {
             services.AddHttpCacheHeaders(
@@ -48,8 +47,6 @@ namespace my_book_store_v1.Exceptions
                     
                 );
         }
-
-
         public static void ConfigureRateLimitingOptions(this IServiceCollection services)
         {
             var rateLimitRules = new List<RateLimitRule>

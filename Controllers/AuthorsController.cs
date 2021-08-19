@@ -35,8 +35,20 @@ namespace my_book_store_v1.Controllers
         [HttpGet("get-all-author")]
         public IActionResult GetAuthor()
         {
-            var _allAuthors = _authorService.GetAllAuthors();
-            return Ok(_allAuthors);
+
+            //throw new Exception("This excepiton is come form GetAuthor()");
+
+            try
+            {
+                var _allAuthors = _authorService.GetAllAuthors();
+                return Ok(_allAuthors);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message + "This is come from getauhros");
+            }
+        
         }
 
 

@@ -49,6 +49,7 @@ namespace my_book_store_v1
             services.AddTransient<BookServices>();
             services.AddTransient<AuthorService>();
             services.AddTransient<PublihserService>();
+            services.AddTransient<LogsServices>();
             services.ConfigureVersioning();
 
             services.AddSwaggerGen(c =>
@@ -58,7 +59,7 @@ namespace my_book_store_v1
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -73,8 +74,8 @@ namespace my_book_store_v1
             app.UseIpRateLimiting();
             app.UseRouting();
             app.UseAuthorization();
-            //app.ConfigureExceptionHandler();
-            app.ConfigureCustomExceptionMiddleware();
+            app.ConfigureExceptionHandler(loggerFactory);
+            //app.ConfigureCustomExceptionMiddleware();
 
             app.UseEndpoints(endpoints =>
             {
