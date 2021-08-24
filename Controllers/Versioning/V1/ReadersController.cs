@@ -16,7 +16,6 @@ namespace my_book_store_v1.Controllers.Versioning.V1
     public class ReadersController : ControllerBase
     {
         //Static Data
-
         static List<ReaderVM> _readers = new List<ReaderVM>()
         {
             new ReaderVM(){Id=1,Name="Jone",Address="USA",IsRead=true},

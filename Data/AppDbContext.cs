@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using my_book_store_v1.Data.Configurations.Entities;
 using my_book_store_v1.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace my_book_store_v1.Data
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext:IdentityDbContext<ApiUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
         {
@@ -16,13 +18,18 @@ namespace my_book_store_v1.Data
 
         //Fluent Api
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {  
+            base.OnModelCreating(modelBuilder);
             //configure book-author- books
             modelBuilder.Entity<Book_Author>().HasOne(b => b.Books).WithMany(ba => ba.book_Authors).HasForeignKey(bi => bi.BooksId);
             //configure book-author- author
             modelBuilder.Entity<Book_Author>().HasOne(b => b.Author).WithMany(ba => ba.book_Authors).HasForeignKey(bi => bi.AuthorId);
             //Configre LogID
             modelBuilder.Entity<Log>().HasKey(o => o.Id);
+
+            //Configure UserRole
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+
 
         }
 

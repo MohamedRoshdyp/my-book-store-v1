@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using my_book_store_v1.ActionResults;
@@ -31,7 +32,6 @@ namespace my_book_store_v1.Controllers
         [HttpPost("add-publihser")]
         public IActionResult AddPublisher([FromBody] PublisherVM publisher)
         {
-
             try
             {
                 var newpublihser = _publihserService.Addpublisher(publisher);
@@ -48,9 +48,9 @@ namespace my_book_store_v1.Controllers
                 return BadRequest(ex.Message);
             }
 
-
         }
 
+        
         [HttpGet("get-all-publihser")]
         public IActionResult GetAllPublihser(string orderBy,string searchValue,int pageNumber,int pageSize)
         {
@@ -68,6 +68,7 @@ namespace my_book_store_v1.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("get-publisher-by-id/{id}")]
         public IActionResult GetpublisherById(int id)
         {
