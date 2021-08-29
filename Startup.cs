@@ -48,7 +48,7 @@ namespace my_book_store_v1
                  );
             });
             services.ConfigureJWT(Configuration);
-            services.AddAuthentication();
+            //services.AddAuthentication();
             services.AddAuthorization();
            
             services.ConfigreIdentity();

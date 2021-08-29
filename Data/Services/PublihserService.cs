@@ -26,9 +26,9 @@ namespace my_book_store_v1.Data.Services
         public Publisher Addpublisher(PublisherVM publisher)
         {
 
-            if (StringStartWithLetter(publisher.Name))
+            if (StringStartWithNumber(publisher.Name))
             {
-                throw new PublihserNameException("Must Start With a digit number", publisher.Name);
+                throw new PublihserNameException("Start With a digit number", publisher.Name);
             }
 
             var _publisher = new Publisher()
@@ -70,7 +70,7 @@ namespace my_book_store_v1.Data.Services
             }
             //Paging
             //int pageSize = 3;
-            pulihserList = PagedList<Publisher>.ToPagedList(pulihserList.AsQueryable(), pageNumber ?? 1, pageSize.Value);
+            pulihserList = PagedList<Publisher>.ToPagedList(pulihserList.AsQueryable(), pageNumber ?? 1, pageSize??5);
             
            
             return pulihserList;
@@ -112,7 +112,7 @@ namespace my_book_store_v1.Data.Services
         }
 
 
-        private bool StringStartWithLetter(string name)=>Regex.IsMatch(name, @"^\d");
+        private bool StringStartWithNumber(string name)=>Regex.IsMatch(name, @"^\d");
 
 
     }

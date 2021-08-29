@@ -15,6 +15,7 @@ namespace my_book_store_v1.Data
             SeedBook(applicationBuilder);
             SeedPbulihser(applicationBuilder);
             SeedPAuthor(applicationBuilder);
+            SeedBook_Authors(applicationBuilder);
         }
 
         public static void SeedBook(IApplicationBuilder applicationBuilder)
@@ -103,6 +104,44 @@ namespace my_book_store_v1.Data
                      {
 
                          FullName = "Author 2"
+                     });
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public static void SeedBook_Authors(IApplicationBuilder applicationBuilder)
+        {
+            //Scope with App Service
+            using (var ServiceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                //get db
+                var context = ServiceScope.ServiceProvider.GetService<AppDbContext>();
+
+                if (!context.Book_Authors.Any())
+                {
+                    context.Book_Authors.AddRange(new Book_Author()
+                    {
+
+                        Id=1,
+                        BooksId=1,
+                        AuthorId = 1
+                    },
+
+                     new Book_Author()
+                     {
+
+                         Id = 2,
+                         BooksId = 1,
+                         AuthorId = 2
+                     },
+
+                     new Book_Author()
+                     {
+
+                         Id = 3,
+                         BooksId = 2,
+                         AuthorId = 2
                      });
                     context.SaveChanges();
                 }
